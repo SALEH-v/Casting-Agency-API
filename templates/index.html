@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+body {
+  background-color: #161a1f;
+}
+
+#pa {
+text-align: center;
+display: block;
+margin: 0px auto;
+font-family: Gill Sans, sans-serif;
+font-size: 17px
+color: white;
+}
+
+h1 {
+color: white;
+text-align: center;
+font-family: Serif;
+display: block;
+margin: 0px auto;
+font-size: 45px
+
+}
+
+
+.button {
+  background-color: #cc7a00;
+  font-weight: bold;
+  font-family: Sans-serif;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 10px 25px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+h3, ul {
+color: white;
+}
+
+p {
+color: white;
+}
+</style>
+    <meta charset="UTF-8">
+    <title>Casting Agency</title>
+
+</head>
+<body>
+    <h1>Welcome to the Casting Agency</h1>
+    <br>
+    <br>
+
+    <p id="pa">In order to interact with the API, you should first login and get your JWT</p>
+    <br>
+    <br>
+    <a href="https://saleh-dev.us.auth0.com/authorize?audience=agency&response_type=token&client_id=RtSZX03fND4SwyJagLrhmClO7q3bjIeZ&redirect_uri=http://my-casting-agency-api.herokuapp.com/login-result" class="button"> Login</a>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div>
+        <h3>Casting Assistant</h3>
+        <p>Can view actors and movies</p>
+        <ul>
+            <li>Email: assistant@castingagency.com <br>
+                Password: Assistant12345</li>
+        </ul>
+        <br>
+
+        <h3>Casting Director</h3>
+        <p>All permissions a Casting Assistant has and… Add or delete an actor from the database and Modify actors or movies</p>
+        <ul>
+            <li>Email: director@castingagency.com <br>
+                Password: Director12345</li>
+        </ul>
+        <br>
+
+        <h3>Executive Producer</h3>
+        <p>All permissions a Casting Director has and… Add or delete a movie from the database</p>
+        <ul>
+            <li>Email: executive@castingagency.com <br>
+                Password: Producer12345</li>
+        </ul>
+    </div>
+</body>
+</html>

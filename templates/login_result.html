@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Casting Agency Login result</title>
+</head>
+<body>
+    <h2>Successfully logged in</h2>
+
+    <p>The JWT is:</p>
+    <p id="jwt"></p>
+    <b>
+    <a href="https://saleh-dev.us.auth0.com/v2/logout?client_id=RtSZX03fND4SwyJagLrhmClO7q3bjIeZ&returnTo=http://my-casting-agency-api.herokuapp.com/logout">Logout</a>
+
+<script>
+
+    const jwt = location.hash.substring(1).split("&")[0].split("=")[1];
+
+    document.getElementById("jwt").innerHTML = jwt;
+
+</script>
+</body>
+</html>
