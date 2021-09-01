@@ -334,3 +334,7 @@ The endpoints are:
 
 - Udacity provided the specifications
 - Saleh worked on everything with this the API.
+
+## Motivation
+
+- My motivation for this project is to complete my nano-degree projects, and this will help me alot to improve my coding skills.

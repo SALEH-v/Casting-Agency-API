@@ -6,8 +6,8 @@ from jose import jwt
 from urllib.request import urlopen
 
 AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'agency'
+ALGORITHMS = os.environ.get('ALGORITHMS')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
 
 class AuthError(Exception):
@@ -16,14 +16,18 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
+
+## Auth Header
+# This is to get the header from the request
 def get_token_auth_header():
     authorazation = request.headers.get('Authorization', None)
+    #raise an AuthError if no header is present
     if not authorazation:
         raise AuthError({
             'code': 'authorization_header_missing',
             'description': 'Authorization header is expected.'
         }, 401)
-
+    #split bearer and the token
     parts = authorazation.split()
 
     if parts[0].lower() != 'bearer':
@@ -48,14 +52,15 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
-
+##Check the permissions
 def check_permissions(permission, payload):
+    #raise an AuthError if permissions are not included in the payload
     if 'permissions' not in payload:
         raise AuthError({
             'code': 'invalid_claims',
             'description': 'Permissions not included in JWT.'
         }, 400)
-
+    #raise an AuthError if the requested permission string is not in the payload permissions array    
     if permission not in payload['permissions']:
         raise AuthError({
             'code': 'unauthorized',
@@ -64,13 +69,15 @@ def check_permissions(permission, payload):
 
     return True
 
+## Verify the jwt
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
 
     unverified_header = jwt.get_unverified_header(token)
-
+    #An Auth0 token with key id (kid)
     rsa_key = {}
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -87,6 +94,7 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
+    #Decode the payload from the token
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -121,16 +129,21 @@ def verify_decode_jwt(token):
         'description': 'Unable to find the appropriate key.'
     }, 400)
 
+##Requires auth
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
+            #Using the get_token_auth_header method to get the token
             token = get_token_auth_header()
+            #Using the verify_decode_jwt method to decode the jwt
             payload = verify_decode_jwt(token)
+            #Using the check_permissions method to validate claims and check the requested permission
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
 
         return wrapper
-
+    #return the decorator which passes the decoded payload to the decorated method
     return requires_auth_decorator
