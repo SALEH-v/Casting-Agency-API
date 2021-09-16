@@ -333,7 +333,7 @@ The endpoints are:
 ## Authors
 
 - Udacity provided the specifications
-- Saleh worked on everything with this the API.
+- Saleh worked on everything with this API.
 
 ## Motivation
 
